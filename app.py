@@ -32,8 +32,8 @@ with tab_dashboard:
     st.subheader("Dashboard de Indicadores")
 
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Consumo Total (m³)", f"{generate_random(1200000,1300000):,}".replace(",", "."))
-    col2.metric("Preço Médio (R$/m³)", f"{generate_random(2.30,2.60,2)}")
+    col1.metric("Consumo Total (Ton)", f"{generate_random(1200000,1300000):,}".replace(",", "."))
+    col2.metric("Preço Médio (R$/Ton)", f"{generate_random(2.30,2.60,2)}")
     col3.metric("Margem Operacional (%)", f"{generate_random(15,22,1)}")
     col4.metric("Nível de Estoque", f"{generate_random(65,85)}%")
 
@@ -87,5 +87,6 @@ with tab_simulator:
                 st.success(f"### {cor} Recomendação: {recomendacao}")
                 st.write(f"**Cenário A (Comprar Agora)**\n- Custo: R$ {custo_agora:,.2f}\n- Cobertura: {int((estoque_atual+quantidade)/(quantidade*(30/horizonte)))} dias")
                 st.write(f"**Cenário B (Esperar)**\n- Custo: R$ {custo_futuro:,.2f}\n- Economia Potencial: R$ {economia:,.2f}\n- Risco de Falta: {risco:.1f}%")
+
 
 
