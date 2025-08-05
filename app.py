@@ -1,3 +1,12 @@
+import subprocess
+import sys
+
+try:
+    import plotly
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "plotly"])
+    import plotly
+
 # app.py
 import streamlit as st
 import plotly.express as px
@@ -78,3 +87,4 @@ with tab_simulator:
                 st.success(f"### {cor} Recomendação: {recomendacao}")
                 st.write(f"**Cenário A (Comprar Agora)**\n- Custo: R$ {custo_agora:,.2f}\n- Cobertura: {int((estoque_atual+quantidade)/(quantidade*(30/horizonte)))} dias")
                 st.write(f"**Cenário B (Esperar)**\n- Custo: R$ {custo_futuro:,.2f}\n- Economia Potencial: R$ {economia:,.2f}\n- Risco de Falta: {risco:.1f}%")
+
