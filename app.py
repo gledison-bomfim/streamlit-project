@@ -61,10 +61,10 @@ with tab_simulator:
 
     col1, col2 = st.columns([1,2])
     with col1:
-        preco_atual = st.number_input("Preço Atual do Leilão (R$/m³)", min_value=0.0, step=0.01, value=2.45)
-        quantidade = st.number_input("Quantidade Desejada (m³)", min_value=0, step=1000, value=100000)
-        preco_futuro = st.number_input("Projeção de Preço Futuro (R$/m³)", min_value=0.0, step=0.01, value=2.60)
-        estoque_atual = st.number_input("Estoque Atual (m³)", min_value=0, step=1000, value=500000)
+        preco_atual = st.number_input("Preço Atual do Leilão (R$/Ton)", min_value=0.0, step=0.01, value=2.45)
+        quantidade = st.number_input("Quantidade Desejada (Ton)", min_value=0, step=1000, value=100000)
+        preco_futuro = st.number_input("Projeção de Preço Futuro (R$/Ton)", min_value=0.0, step=0.01, value=2.60)
+        estoque_atual = st.number_input("Estoque Atual (Ton)", min_value=0, step=1000, value=500000)
         horizonte = st.selectbox("Horizonte de Tempo (dias)", [30,60,90])
 
         if st.button("▶ Simular Cenários"):
@@ -87,4 +87,5 @@ with tab_simulator:
                 st.success(f"### {cor} Recomendação: {recomendacao}")
                 st.write(f"**Cenário A (Comprar Agora)**\n- Custo: R$ {custo_agora:,.2f}\n- Cobertura: {int((estoque_atual+quantidade)/(quantidade*(30/horizonte)))} dias")
                 st.write(f"**Cenário B (Esperar)**\n- Custo: R$ {custo_futuro:,.2f}\n- Economia Potencial: R$ {economia:,.2f}\n- Risco de Falta: {risco:.1f}%")
+
 
