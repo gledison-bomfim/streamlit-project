@@ -1,0 +1,13 @@
+# Bibliotecas principais
+streamlit>=1.25
+plotly>=5.18
+
+# Manipulação de dados
+pandas>=2.0
+numpy>=1.24
+
+# Visualização extra (caso precise)
+matplotlib>=3.7
+
+# Evita conflitos de dependências no Streamlit Cloud
+protobuf~=4.25
