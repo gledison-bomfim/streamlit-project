@@ -6,8 +6,8 @@ from datetime import datetime, date
 # -------------------------
 st.set_page_config(page_title="Central Inteligente", layout="wide")
 
-# Logo da Supergasbras
-st.image("Logo-Versao-Preferencial.png", width=250)
+# Logo da Supergasbras (arquivo anexado)
+st.image("/mnt/data/Logo-Versao-Preferencial.png", width=250)
 
 # Recuperar parâmetros do QR Code (cliente e central)
 query_params = st.query_params
@@ -66,14 +66,14 @@ def home_page():
     with col3:
         st.markdown(
             f'<a href="https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR">'
-            f'<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" width="200">'
+            f'<img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Get_it_on_Google_play.svg" width="200">'
             f'</a>',
             unsafe_allow_html=True,
         )
     with col4:
         st.markdown(
             f'<a href="https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493">'
-            f'<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" width="200">'
+            f'<img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Download_on_the_App_Store_Badge.png" width="200">'
             f'</a>',
             unsafe_allow_html=True,
         )
