@@ -1,10 +1,13 @@
 import streamlit as st
-from datetime import datetime, date, time
+from datetime import datetime, date
 
 # -------------------------
 # Configurações iniciais
 # -------------------------
 st.set_page_config(page_title="Central Inteligente", layout="wide")
+
+# Logo da Supergasbras
+st.image("Logo-Versao-Preferencial.png", width=250)
 
 # Recuperar parâmetros do QR Code (cliente e central)
 query_params = st.query_params
@@ -58,11 +61,22 @@ def home_page():
 
     st.markdown("---")
     st.warning("Se for cliente acesse o app Super Gestão:")
+
     col3, col4 = st.columns(2)
     with col3:
-        st.markdown("[📱 Google Play](https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR)")
+        st.markdown(
+            f'<a href="https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR">'
+            f'<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" width="200">'
+            f'</a>',
+            unsafe_allow_html=True,
+        )
     with col4:
-        st.markdown("[🍎 App Store](https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493)")
+        st.markdown(
+            f'<a href="https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493">'
+            f'<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" width="200">'
+            f'</a>',
+            unsafe_allow_html=True,
+        )
 
 
 def checkin_page():
@@ -84,9 +98,8 @@ def checkin_page():
 
     # Data e hora
     hoje = date.today()
-    agora = datetime.now().time()
     data = st.date_input("Data", value=hoje)
-    hora = st.time_input("Hora", value=agora)
+    hora = st.time_input("Hora", value=datetime.now().time())
 
     # Localização automática
     loc = get_location()
@@ -99,7 +112,6 @@ def checkin_page():
     )
 
     if st.button("✅ Confirmar Check-in"):
-        # Salvar check-in temporário (sem histórico persistente)
         st.session_state.page = "equipamentos"
 
 
@@ -107,7 +119,7 @@ def equipamentos_page():
     st.title("Relação de Equipamentos")
     st.caption(f"Cliente: {cliente} | Central: {central}")
 
-    for eq in EQUIPAMENTOS:
+    for i, eq in enumerate(EQUIPAMENTOS):
         with st.expander(f"EQUIPAMENTO: {eq['nome']} | QUANTIDADE: {eq['quantidade']}"):
             st.write(f"Fabricante: {eq['fabricante']}")
             st.write(f"Data de Fabricação: {eq['data_fabricacao']}")
@@ -116,7 +128,8 @@ def equipamentos_page():
 
             divergencia = st.multiselect(
                 "Reportar divergência:",
-                ["Quantidade", "Número de Série", "Fabricante", "Nº Patrimônio"]
+                ["Quantidade", "Número de Série", "Fabricante", "Nº Patrimônio"],
+                key=f"div_{i}"  # 🔑 Corrige erro de duplicidade
             )
             if divergencia:
                 st.error(f"Divergências reportadas: {', '.join(divergencia)}")
