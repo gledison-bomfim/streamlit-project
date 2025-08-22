@@ -21,7 +21,7 @@ def get_location():
 
 EQUIPAMENTOS = [
     {"nome": "Tanque P190","quantidade": 2,"fabricante": "ACME","data_fabricacao": "2020-01-01","n_serie": "12345","n_patrimonio": "P190-001"},
-    {"nome": "Reguladores de Pressão","quantidade": 4,"fabricante": "Regula","data_fabricacao": "2021-03-15","n_serie": "67890","n_patrimonio": "REG-004"},
+    {"nome": "Telemetria","quantidade": 1,"fabricante": "Regula","data_fabricacao": "2021-03-15","n_serie": "67890","n_patrimonio": "REG-004"},
 ]
 
 # -------------------------
@@ -179,6 +179,7 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
 
