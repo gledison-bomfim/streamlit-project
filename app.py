@@ -6,8 +6,12 @@ from datetime import datetime, date
 # -------------------------
 st.set_page_config(page_title="Central Inteligente", layout="wide")
 
-# Logo da Supergasbras (arquivo anexado)
-st.image("/mnt/data/Logo-Versao-Preferencial.png", width=250)
+# Função para exibir logo no topo
+def show_logo():
+    st.image(
+        "https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png",
+        width=250
+    )
 
 # Recuperar parâmetros do QR Code (cliente e central)
 query_params = st.query_params
@@ -47,6 +51,7 @@ EQUIPAMENTOS = [
 # -------------------------
 
 def home_page():
+    show_logo()
     st.title("Central Inteligente")
     st.subheader(f"Central: {central}")
     st.caption(f"Cliente: {cliente}")
@@ -80,6 +85,7 @@ def home_page():
 
 
 def checkin_page():
+    show_logo()
     st.title("Check-in")
     st.caption(f"Cliente: {cliente} | Central: {central}")
 
@@ -116,6 +122,7 @@ def checkin_page():
 
 
 def equipamentos_page():
+    show_logo()
     st.title("Relação de Equipamentos")
     st.caption(f"Cliente: {cliente} | Central: {central}")
 
