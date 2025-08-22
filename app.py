@@ -95,7 +95,7 @@ def show_header():
         <div class="header">
           <div class="header-top">
             <img class="header-logo" src="https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png" />
-            <h1 class="header-title">Central Inteligente</h1>
+            <h1 class="header-title">Check in</h1>
             <div class="header-phantom"></div>
           </div>
           <div class="header-meta">
@@ -178,6 +178,7 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
 
