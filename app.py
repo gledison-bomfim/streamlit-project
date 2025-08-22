@@ -6,68 +6,136 @@ from datetime import datetime, date
 # -------------------------
 st.set_page_config(page_title="Central Inteligente", layout="wide")
 
-# Recuperar parâmetros do QR Code (cliente e central)
+# -------------------------
+# Parâmetros
+# -------------------------
 query_params = st.query_params
 cliente = query_params.get("cliente", "JC PIZZARIA LTDA")
 central = query_params.get("central", "Central Padrão")
 
-# Sessão para armazenar navegação
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-# Mock de localização automática
 def get_location():
-    return {"latitude": -19.9227, "longitude": -43.9451}  # Exemplo fixo
+    return {"latitude": -19.9227, "longitude": -43.9451}
 
-# Mock de equipamentos
 EQUIPAMENTOS = [
     {"nome": "Tanque P190","quantidade": 2,"fabricante": "ACME","data_fabricacao": "2020-01-01","n_serie": "12345","n_patrimonio": "P190-001"},
     {"nome": "Reguladores de Pressão","quantidade": 4,"fabricante": "Regula","data_fabricacao": "2021-03-15","n_serie": "67890","n_patrimonio": "REG-004"},
 ]
 
 # -------------------------
+# Estilos globais (mobile-first)
+# -------------------------
+st.markdown(
+    """
+    <style>
+      /* compacta o padding no mobile */
+      @media (max-width: 480px){
+        .block-container{padding-top: 0.6rem; padding-bottom: 0.8rem;}
+      }
+
+      .header{margin: 0 0 .5rem 0;}
+      .header-top{
+        display: grid;
+        grid-template-columns: auto 1fr auto; /* logo | título | placeholder p/ centralizar de verdade */
+        align-items: center;
+        column-gap: 12px;
+      }
+      .header-logo{
+        width: 90px;
+      }
+      .header-phantom{
+        width: 90px; /* mesmo "peso" da logo para centralizar o h1 */
+      }
+      .header-title{
+        text-align: center;
+        margin: 0;
+        font-size: clamp(1.6rem, 4.5vw + .2rem, 2.2rem);
+        line-height: 1.15;
+      }
+      .header-meta{
+        margin-top: .25rem;
+      }
+      .header-meta .line{
+        margin: 0;
+        text-align: left;       /* alinhado à esquerda */
+        font-weight: 600;
+        font-size: clamp(1rem, 2.8vw + .2rem, 1.15rem);
+      }
+
+      /* Botões das lojas lado a lado inclusive no mobile */
+      .store-buttons{
+        display: flex;
+        gap: 12px;
+        flex-wrap: nowrap;
+        justify-content: center;   /* pode trocar para 'flex-start' se preferir à esquerda */
+        margin-top: .5rem;
+      }
+      .store-buttons a{
+        text-decoration: none;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: .5rem;
+        padding: .6rem .9rem;
+        display: inline-block;
+        font-weight: 600;
+      }
+      /* Ajustes de espaço */
+      .hr{margin:.6rem 0 .8rem 0;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -------------------------
 # Cabeçalho
 # -------------------------
 def show_header():
-    # Logo centralizada mais acima
     st.markdown(
-        """
-        <div style='text-align:center; margin-top:-20px;'>
-            <img src='https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png' width='120'>
+        f"""
+        <div class="header">
+          <div class="header-top">
+            <img class="header-logo" src="https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png" />
+            <h1 class="header-title">Central Inteligente</h1>
+            <div class="header-phantom"></div>
+          </div>
+          <div class="header-meta">
+            <p class="line">Central: {central}</p>
+            <p class="line">Cliente: {cliente}</p>
+          </div>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    # Título e informações centralizados
-    st.markdown("<h1 style='text-align: center; margin-bottom:5px;'>Central Inteligente</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h4 style='text-align: center; margin:0;'>Central: {central}</h4>", unsafe_allow_html=True)
-    st.markdown(f"<h4 style='text-align: center; margin-top:0;'>Cliente: {cliente}</h4>", unsafe_allow_html=True)
-
 # -------------------------
 # Páginas
 # -------------------------
-
 def home_page():
     show_header()
 
-    st.markdown("---")
-    col1, col2 = st.columns(2)
-    with col1:
+    st.markdown('<div class="hr"><hr/></div>', unsafe_allow_html=True)
+
+    c1, c2 = st.columns(2)
+    with c1:
         if st.button("📍 Fazer Check-in"):
             st.session_state.page = "checkin"
-    with col2:
+    with c2:
         st.button("ℹ️ Ver informações do cliente")
 
-    st.markdown("---")
+    st.markdown('<div class="hr"><hr/></div>', unsafe_allow_html=True)
     st.warning("Se for cliente, acesse o app Super Gestão:")
 
-    # Botões responsivos lado a lado
-    col3, col4 = st.columns([1, 1])
-    with col3:
-        st.link_button("Google Play", "https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR")
-    with col4:
-        st.link_button("App Store", "https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493")
+    # Botões das lojas lado a lado (inclusive no mobile)
+    st.markdown(
+        """
+        <div class="store-buttons">
+          <a href="https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR" target="_blank" rel="noopener">Google Play</a>
+          <a href="https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493" target="_blank" rel="noopener">App Store</a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 def checkin_page():
     show_header()
@@ -77,19 +145,13 @@ def checkin_page():
         ["Abastecimento","Visita Relacionamento","Assistência Técnica","Manutenção Preventiva","Visita SPOT","NR13/Requalificação"]
     )
 
-    # Data fixa e não editável
-    hoje = date.today().strftime("%d/%m/%Y")
-    st.text_input("Data", value=hoje, disabled=True)
+    # Data e hora fixas (não editáveis)
+    st.text_input("Data", value=date.today().strftime("%d/%m/%Y"), disabled=True)
+    st.text_input("Hora", value=datetime.now().strftime("%H:%M"), disabled=True)
 
-    # Hora fixa e não editável
-    hora_atual = datetime.now().strftime("%H:%M")
-    st.text_input("Hora", value=hora_atual, disabled=True)
-
-    # Localização automática
     loc = get_location()
     st.info(f"Localização detectada: Latitude {loc['latitude']}, Longitude {loc['longitude']}")
 
-    # Upload da foto (obrigatório)
     foto = st.file_uploader(
         "Upload da foto da central (externa, portão aberto, visão dos tanques)",
         type=["jpg", "jpeg", "png"]
