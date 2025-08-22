@@ -32,8 +32,8 @@ def show_logo():
 
 # Recuperar parâmetros do QR Code (cliente e central)
 query_params = st.query_params
-cliente = query_params.get("cliente", "Cliente Exemplo")
-central = query_params.get("central", "Central Exemplo")
+cliente = query_params.get("cliente", "JC PIZZARIA LTDA")
+central = query_params.get("central", "Central Padrão")
 
 # Sessão para armazenar navegação
 if "page" not in st.session_state:
@@ -167,5 +167,6 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
