@@ -6,12 +6,29 @@ from datetime import datetime, date
 # -------------------------
 st.set_page_config(page_title="Central Inteligente", layout="wide")
 
-# Função para exibir logo no topo
+import streamlit as st
+
 def show_logo():
-    st.image(
-        "https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png",
-        width=250
+    st.markdown(
+        """
+        <style>
+        .logo-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        .logo-container img {
+            width: 250px;
+        }
+        </style>
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png">
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+
 
 # Recuperar parâmetros do QR Code (cliente e central)
 query_params = st.query_params
@@ -150,3 +167,4 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
