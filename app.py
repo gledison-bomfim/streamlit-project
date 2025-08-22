@@ -82,23 +82,23 @@ def home_page():
         st.button("ℹ️ Ver informações do cliente")
 
     st.markdown("---")
-    st.warning("Se for cliente acesse o app Super Gestão:")
-
+    st.warning("Se for cliente, acesse o app Super Gestão:")
+    
     col3, col4 = st.columns(2)
+    
     with col3:
-        st.markdown(
-            f'<a href="https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR">'
-            f'<img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Get_it_on_Google_play.svg" width="200">'
-            f'</a>',
-            unsafe_allow_html=True,
-        )
+        if st.button("Google Play"):
+            st.markdown(
+                '<meta http-equiv="refresh" content="0;url=https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR">',
+                unsafe_allow_html=True
+            )
+    
     with col4:
-        st.markdown(
-            f'<a href="https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493">'
-            f'<img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Download_on_the_App_Store_Badge.png" width="200">'
-            f'</a>',
-            unsafe_allow_html=True,
-        )
+        if st.button("App Store"):
+            st.markdown(
+                '<meta http-equiv="refresh" content="0;url=https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493">',
+                unsafe_allow_html=True
+            )
 
 
 def checkin_page():
@@ -167,4 +167,5 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
