@@ -47,7 +47,7 @@ st.markdown(
       .header-phantom{width: 80px;}
       .header-title{
         text-align: center;
-      margin: 10px 0 0 0;   /* 👈 empurra o título um pouco para baixo */
+      margin: 20px 0 0 0;   /* 👈 empurra o título um pouco para baixo */
 
         /*font-size: clamp(1.3rem, 4vw + .2rem, 1.8rem);  menor */
         font-size: clamp(1.3rem, 3vw + .2rem, 1.5rem);
@@ -179,6 +179,7 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
 
