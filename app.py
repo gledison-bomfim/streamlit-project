@@ -4,7 +4,7 @@ from datetime import datetime, date
 # -------------------------
 # Configurações iniciais
 # -------------------------
-st.set_page_config(page_title="Check in", layout="wide")
+st.set_page_config(page_title="ConfirmAI", layout="wide")
 
 # -------------------------
 # Parâmetros
@@ -179,6 +179,7 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
 
