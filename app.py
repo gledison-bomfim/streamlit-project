@@ -32,7 +32,7 @@ st.markdown(
     <style>
       /* compacta o padding no mobile */
       @media (max-width: 480px){
-        .block-container{padding-top: 0.6rem; padding-bottom: 0.8rem;}
+        .block-container{padding-top: 0.8rem; padding-bottom: 0.8rem;}
       }
 
       .header{margin: 0 0 .5rem 0;}
@@ -179,3 +179,4 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
