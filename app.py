@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, date, time
 import io
 import base64
 import json
@@ -189,11 +189,11 @@ elif st.session_state.page == "checkin":
 
         colA, colB = st.columns(2)
         with colA:
-            dt = st.datetime_input("Data e hora", value=datetime.now())
+            data_sel = st.date_input("Data", value=date.today())
+            hora_sel = st.time_input("Hora", value=datetime.now().time())
+            dt = datetime.combine(data_sel, hora_sel)
         with colB:
             st.markdown("**Localização (GPS)**")
-            # Tentar capturar via geolocalização do navegador usando um iframe simples
-            geo_placeholder = st.empty()
             manual_lat = st.text_input("Latitude (opcional)", placeholder="-19.9876")
             manual_lon = st.text_input("Longitude (opcional)", placeholder="-44.0123")
             st.caption("Se a localização automática falhar, preencha latitude/longitude manualmente.")
@@ -210,7 +210,6 @@ elif st.session_state.page == "checkin":
 
         if salvar:
             latlon = None
-            # Priorizar manual se preenchido
             if manual_lat and manual_lon:
                 latlon = {"lat": manual_lat, "lon": manual_lon}
 
@@ -225,7 +224,7 @@ elif st.session_state.page == "checkin":
                 "cliente": st.session_state["cliente_nome"],
                 "central": st.session_state["central_nome"],
                 "motivo": motivo,
-                "datahora": dt.isoformat() if isinstance(dt, datetime) else str(dt),
+                "datahora": dt.isoformat(),
                 "localizacao": latlon,
                 "instrucoes_foto": instrucoes,
                 "foto_nome": foto_name,
@@ -234,13 +233,11 @@ elif st.session_state.page == "checkin":
             st.session_state.checkins.append(registro)
             st.success("Check-in salvo!")
 
-    # Resumo dos últimos check-ins
     if st.session_state.checkins:
         st.markdown("### Últimos check-ins")
         df = pd.json_normalize(st.session_state.checkins)
         st.dataframe(df.drop(columns=[c for c in df.columns if c.endswith("_b64")]), use_container_width=True)
 
-    # Navegação
     c1, c2 = st.columns(2)
     with c1:
         if st.button("⬅️ Voltar", use_container_width=True):
@@ -254,7 +251,6 @@ elif st.session_state.page == "checkin":
 elif st.session_state.page == "equipamentos":
     st.subheader("Equipamentos da Central (visão compacta)")
 
-    # Visão enxuta/compacta
     for item in amostra_equipamentos:
         with st.container(border=True):
             c1, c2 = st.columns([2, 1])
@@ -266,17 +262,15 @@ elif st.session_state.page == "equipamentos":
             with c2:
                 st.markdown(f"**QUANTIDADE:** {item['quantidade']}")
 
-            # Expandir para ver os outros campos
             with st.expander("Expandir detalhes"):
                 colA, colB = st.columns(2)
                 with colA:
-                    st.write("Fabricante:", item["fabricante"]) 
-                    st.write("Data de fabricação:", item["data_fabricacao"]) 
+                    st.write("Fabricante:", item["fabricante"])
+                    st.write("Data de fabricação:", item["data_fabricacao"])
                 with colB:
-                    st.write("Nº Série:", item["num_serie"]) 
-                    st.write("Nº Patrimônio:", item["num_patrimonio"]) 
+                    st.write("Nº Série:", item["num_serie"])
+                    st.write("Nº Patrimônio:", item["num_patrimonio"])
 
-            # Reportar divergência
             with st.popover("🚩 Reportar divergência"):
                 diverg = st.multiselect(
                     "O que está divergente?", DIVERGENCIAS_OPCOES, placeholder="Selecione um ou mais itens"
@@ -295,7 +289,6 @@ elif st.session_state.page == "equipamentos":
                     st.session_state.divergencias.append(registro_div)
                     st.success("Divergência registrada!")
 
-    # Botões de navegação
     c1, c2 = st.columns(2)
     with c1:
         if st.button("⬅️ Voltar", use_container_width=True):
@@ -306,7 +299,6 @@ elif st.session_state.page == "equipamentos":
             st.session_state.page = "checkin"
             st.rerun()
 
-    # Resumo de divergências
     if st.session_state.divergencias:
         st.markdown("### Divergências reportadas")
         df_div = pd.json_normalize(st.session_state.divergencias)
@@ -315,7 +307,6 @@ elif st.session_state.page == "equipamentos":
 elif st.session_state.page == "cliente":
     st.subheader("Informações do cliente")
 
-    # Placeholder minimalista — substitua pela sua fonte de dados
     with st.container(border=True):
         st.write("Nome:", st.session_state["cliente_nome"])
         st.write("Central:", st.session_state["central_nome"])
