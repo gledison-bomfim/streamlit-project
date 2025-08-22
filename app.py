@@ -30,26 +30,59 @@ EQUIPAMENTOS = [
 st.markdown(
     """
     <style>
+      @media (max-width: 480px){
+        .block-container{padding-top: 0.6rem; padding-bottom: 0.8rem;}
+      }
+
+      .header{margin: 0 0 .5rem 0;}
+      .header-top{
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        column-gap: 12px;
+      }
+      .header-logo{
+        width: 80px; /* logo menor também pra combinar */
+      }
+      .header-phantom{width: 80px;}
       .header-title{
         text-align: center;
         margin: 0;
-        font-size: clamp(1.2rem, 3.8vw + .2rem, 1.6rem); /* título menor */
+        font-size: clamp(1.3rem, 4vw + .2rem, 1.8rem); /* ↓ menor */
         line-height: 1.1;
+      }
+      .header-meta{
+        margin-top: .25rem;
       }
       .header-meta .line{
         margin: 0;
         text-align: left;
-        font-weight: 500;
-        font-size: clamp(0.85rem, 2.3vw + .2rem, 1rem); /* infos menores */
+        font-weight: 600;
+        font-size: clamp(0.9rem, 2.5vw + .2rem, 1rem); /* ↓ menor */
+      }
+
+      .store-buttons{
+        display: flex;
+        gap: 10px;
+        flex-wrap: nowrap;
+        justify-content: center;
+        margin-top: .5rem;
       }
       .store-buttons a{
-        font-size: 0.9rem; /* botões um pouco menores */
-        padding: .45rem .8rem;
+        text-decoration: none;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: .5rem;
+        padding: .5rem .8rem;
+        display: inline-block;
+        font-weight: 600;
+        font-size: 0.9rem; /* ↓ menor */
       }
+      .hr{margin:.6rem 0 .8rem 0;}
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 
 # -------------------------
@@ -144,6 +177,7 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
 
