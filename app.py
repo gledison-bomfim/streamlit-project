@@ -13,7 +13,7 @@ def show_logo():
         .logo-container {
             position: fixed;
             top: 10px;
-            right: 10px;
+            left: 10px; /* canto superior esquerdo */
             z-index: 100;
         }
         .logo-container img {
@@ -93,20 +93,21 @@ def checkin_page():
     hoje = date.today().strftime("%d/%m/%Y")
     st.text_input("Data", value=hoje, disabled=True)
 
-    # Hora
-    hora = st.time_input("Hora", value=datetime.now().time())
+    # Hora fixa e não editável
+    hora_atual = datetime.now().strftime("%H:%M")
+    st.text_input("Hora", value=hora_atual, disabled=True)
 
     # Localização automática
     loc = get_location()
     st.info(f"Localização detectada: Latitude {loc['latitude']}, Longitude {loc['longitude']}")
 
-    # Upload da foto
-    st.file_uploader(
+    # Upload da foto (obrigatório)
+    foto = st.file_uploader(
         "Upload da foto da central (externa, portão aberto, visão dos tanques)",
         type=["jpg", "jpeg", "png"]
     )
 
-    if st.button("✅ Confirmar Check-in"):
+    if st.button("✅ Confirmar Check-in", disabled=(foto is None)):
         st.session_state.page = "equipamentos"
 
 def equipamentos_page():
@@ -114,20 +115,12 @@ def equipamentos_page():
     st.markdown("<h1 style='text-align: center;'>Relação de Equipamentos</h1>", unsafe_allow_html=True)
     st.markdown(f"<h4 style='text-align: center;'>Cliente: {cliente} | Central: {central}</h4>", unsafe_allow_html=True)
 
-    for i, eq in enumerate(EQUIPAMENTOS):
+    for eq in EQUIPAMENTOS:
         with st.expander(f"EQUIPAMENTO: {eq['nome']} | QUANTIDADE: {eq['quantidade']}"):
             st.write(f"Fabricante: {eq['fabricante']}")
             st.write(f"Data de Fabricação: {eq['data_fabricacao']}")
             st.write(f"Nº Série: {eq['n_serie']}")
             st.write(f"Nº Patrimônio: {eq['n_patrimonio']}")
-
-            divergencia = st.multiselect(
-                "Reportar divergência:",
-                ["Quantidade", "Número de Série", "Fabricante", "Nº Patrimônio"],
-                key=f"div_{i}"
-            )
-            if divergencia:
-                st.error(f"Divergências reportadas: {', '.join(divergencia)}")
 
 # -------------------------
 # Roteamento
