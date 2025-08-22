@@ -26,19 +26,23 @@ EQUIPAMENTOS = [
 ]
 
 # -------------------------
-# Função cabeçalho
+# Cabeçalho
 # -------------------------
 def show_header():
-    col1, col2 = st.columns([1, 4])  # proporção colunas
+    # Logo centralizada mais acima
+    st.markdown(
+        """
+        <div style='text-align:center; margin-top:-20px;'>
+            <img src='https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png' width='120'>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    with col1:
-        st.image(
-            "https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png",
-            width=120
-        )
-    with col2:
-        st.markdown("<h1 style='margin-bottom:0;'>Central Inteligente</h1>", unsafe_allow_html=True)
-        st.markdown(f"<h4 style='margin-top:0;'>Central: {central} | Cliente: {cliente}</h4>", unsafe_allow_html=True)
+    # Título e informações centralizados
+    st.markdown("<h1 style='text-align: center; margin-bottom:5px;'>Central Inteligente</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin:0;'>Central: {central}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin-top:0;'>Cliente: {cliente}</h4>", unsafe_allow_html=True)
 
 # -------------------------
 # Páginas
@@ -58,13 +62,12 @@ def home_page():
     st.markdown("---")
     st.warning("Se for cliente, acesse o app Super Gestão:")
 
-    col3, col4 = st.columns(2)
+    # Botões responsivos lado a lado
+    col3, col4 = st.columns([1, 1])
     with col3:
-        if st.button("Google Play"):
-            st.markdown('<meta http-equiv="refresh" content="0;url=https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR">', unsafe_allow_html=True)
+        st.link_button("Google Play", "https://play.google.com/store/apps/details?id=com.supergasbras.superapp&hl=pt_BR")
     with col4:
-        if st.button("App Store"):
-            st.markdown('<meta http-equiv="refresh" content="0;url=https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493">', unsafe_allow_html=True)
+        st.link_button("App Store", "https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493")
 
 def checkin_page():
     show_header()
