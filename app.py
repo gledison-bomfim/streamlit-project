@@ -6,27 +6,6 @@ from datetime import datetime, date
 # -------------------------
 st.set_page_config(page_title="Central Inteligente", layout="wide")
 
-def show_logo():
-    st.markdown(
-        """
-        <style>
-        .logo-container {
-            position: absolute;
-            top: 10px;
-            left: 10px; /* canto superior esquerdo */
-            z-index: 100;
-        }
-        .logo-container img {
-            width: 120px; /* Logo menor */
-        }
-        </style>
-        <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
 # Recuperar parâmetros do QR Code (cliente e central)
 query_params = st.query_params
 cliente = query_params.get("cliente", "JC PIZZARIA LTDA")
@@ -43,21 +22,30 @@ def get_location():
 # Mock de equipamentos
 EQUIPAMENTOS = [
     {"nome": "Tanque P190","quantidade": 2,"fabricante": "ACME","data_fabricacao": "2020-01-01","n_serie": "12345","n_patrimonio": "P190-001"},
-    {"nome": "Telemetria","quantidade": 1,"fabricante": "Regula","data_fabricacao": "2021-03-15","n_serie": "67890","n_patrimonio": "REG-004"},
+    {"nome": "Reguladores de Pressão","quantidade": 4,"fabricante": "Regula","data_fabricacao": "2021-03-15","n_serie": "67890","n_patrimonio": "REG-004"},
 ]
 
 # -------------------------
-# Funções de Páginas
+# Função cabeçalho
+# -------------------------
+def show_header():
+    col1, col2 = st.columns([1, 4])  # proporção colunas
+
+    with col1:
+        st.image(
+            "https://raw.githubusercontent.com/gledison-bomfim/streamlit-project/master/Logo-Versao-Preferencial.png",
+            width=120
+        )
+    with col2:
+        st.markdown("<h1 style='margin-bottom:0;'>Central Inteligente</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h4 style='margin-top:0;'>Central: {central} | Cliente: {cliente}</h4>", unsafe_allow_html=True)
+
+# -------------------------
+# Páginas
 # -------------------------
 
 def home_page():
-    show_logo()
-
-    # Centralizar título
-    st.markdown("<h1 style='text-align: center;'>Central Inteligente</h1>", unsafe_allow_html=True)
-
-    # Cliente e Central no mesmo tamanho
-    st.markdown(f"<h4 style='text-align: center;'>Central: {central} | Cliente: {cliente}</h4>", unsafe_allow_html=True)
+    show_header()
 
     st.markdown("---")
     col1, col2 = st.columns(2)
@@ -79,11 +67,8 @@ def home_page():
             st.markdown('<meta http-equiv="refresh" content="0;url=https://apps.apple.com/br/app/super-gest%C3%A3o-supergasbras/id1556506493">', unsafe_allow_html=True)
 
 def checkin_page():
-    show_logo()
-    st.markdown("<h1 style='text-align: center;'>Check-in</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h4 style='text-align: center;'>Cliente: {cliente} | Central: {central}</h4>", unsafe_allow_html=True)
+    show_header()
 
-    # Motivo da visita
     motivo = st.selectbox(
         "Selecione o motivo da visita:",
         ["Abastecimento","Visita Relacionamento","Assistência Técnica","Manutenção Preventiva","Visita SPOT","NR13/Requalificação"]
@@ -111,9 +96,7 @@ def checkin_page():
         st.session_state.page = "equipamentos"
 
 def equipamentos_page():
-    show_logo()
-    st.markdown("<h1 style='text-align: center;'>Relação de Equipamentos</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h4 style='text-align: center;'>Cliente: {cliente} | Central: {central}</h4>", unsafe_allow_html=True)
+    show_header()
 
     for eq in EQUIPAMENTOS:
         with st.expander(f"EQUIPAMENTO: {eq['nome']} | QUANTIDADE: {eq['quantidade']}"):
@@ -131,7 +114,3 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
-
-
-
-
