@@ -30,58 +30,55 @@ EQUIPAMENTOS = [
 st.markdown(
     """
     <style>
-      /* compacta o padding no mobile */
       @media (max-width: 480px){
-        .block-container{padding-top: 0.8rem; padding-bottom: 0.8rem;}
+        .block-container{padding-top: 0.4rem; padding-bottom: 0.6rem;}
       }
 
-      .header{margin: 0 0 .5rem 0;}
+      .header{margin: 0 0 .4rem 0;}
       .header-top{
         display: grid;
-        grid-template-columns: auto 1fr auto; /* logo | título | placeholder p/ centralizar de verdade */
+        grid-template-columns: auto 1fr auto;
         align-items: center;
-        column-gap: 12px;
+        column-gap: 8px;
       }
       .header-logo{
-        width: 90px;
+        width: 70px; /* logo menor no mobile */
       }
-      .header-phantom{
-        width: 90px; /* mesmo "peso" da logo para centralizar o h1 */
-      }
+      .header-phantom{width: 70px;}
       .header-title{
         text-align: center;
         margin: 0;
-        font-size: clamp(1.3rem, 4vw + .2rem, 1.8rem); /* ↓ menor */
-        line-height: 1.15;
+        font-size: clamp(1.1rem, 3vw + .2rem, 1.5rem); /* bem menor */
+        line-height: 1.05;
+        white-space: nowrap;  /* evita quebra em duas linhas */
       }
       .header-meta{
-        margin-top: .25rem;
+        margin-top: .2rem;
       }
       .header-meta .line{
         margin: 0;
-        text-align: left;       /* alinhado à esquerda */
-        font-weight: 600;
-        font-size: clamp(1rem, 2.8vw + .2rem, 1.15rem);
+        text-align: left;
+        font-weight: 500;
+        font-size: clamp(0.8rem, 2vw + .2rem, 0.95rem);
       }
 
-      /* Botões das lojas lado a lado inclusive no mobile */
       .store-buttons{
         display: flex;
-        gap: 12px;
+        gap: 8px;
         flex-wrap: nowrap;
-        justify-content: center;   /* pode trocar para 'flex-start' se preferir à esquerda */
+        justify-content: center;
         margin-top: .5rem;
       }
       .store-buttons a{
         text-decoration: none;
         border: 1px solid rgba(0,0,0,.15);
-        border-radius: .5rem;
-        padding: .6rem .9rem;
+        border-radius: .4rem;
+        padding: .45rem .75rem;
         display: inline-block;
         font-weight: 600;
+        font-size: 0.85rem; /* menor */
       }
-      /* Ajustes de espaço */
-      .hr{margin:.6rem 0 .8rem 0;}
+      .hr{margin:.5rem 0 .6rem 0;}
     </style>
     """,
     unsafe_allow_html=True
@@ -179,5 +176,6 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
