@@ -12,7 +12,7 @@ def show_logo():
         <style>
         .logo-container {
             position: absolute;
-            top: 12px;
+            top: 10px;
             left: 10px; /* canto superior esquerdo */
             z-index: 100;
         }
@@ -131,6 +131,7 @@ elif st.session_state.page == "checkin":
     checkin_page()
 elif st.session_state.page == "equipamentos":
     equipamentos_page()
+
 
 
 
